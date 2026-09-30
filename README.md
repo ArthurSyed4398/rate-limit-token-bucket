@@ -39,3 +39,10 @@ Returns `{ allowed: boolean, retryAfter: number }`.
 
 - If `allowed` is `true`, a token was consumed and `retryAfter` is `0`.
 - If `allowed` is `false`, no token was consumed and `retryAfter` is the number of seconds until at least one token is available, rounded up to the nearest millisecond.
+
+## Performance
+
+The window keeps a bounded buffer, so `push` is constant time and memory does not
+grow with the length of the stream. `peak` and `trough` are linear in the window
+size, which is the trade that keeps `push` cheap.
+
